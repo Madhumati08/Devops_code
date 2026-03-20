@@ -15,13 +15,6 @@ jobs:
         run: |
           echo "Hello World"
 
-      - name: Step 2 - List RDS Instances
-        continue-on-error: false
-        run: |
-          aws rds describe-db-instances \
-          --query "DBInstances[*].DBInstanceIdentifier" \
-          --output table
-
       - name: Step 3 - List EC2 Instances
         continue-on-error: true
         run: |
