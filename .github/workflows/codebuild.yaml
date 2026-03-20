@@ -7,7 +7,7 @@ on:
 jobs:
   aws-check:
     runs-on:
-      - codebuild-test-${{ github.run_id }}-${{ github.run_attempt }}
+      - codebuild-test_demo-${{ github.run_id }}-${{ github.run_attempt }}
 
     steps:
       - name: Step 1 - Hello World
