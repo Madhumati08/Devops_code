@@ -1,0 +1,35 @@
+name: AWS Resource Check
+
+on:
+  # push:
+  workflow_dispatch:
+
+jobs:
+  aws-check:
+    runs-on:
+      - codebuild-test-${{ github.run_id }}-${{ github.run_attempt }}
+
+    steps:
+      - name: Step 1 - Hello World
+        continue-on-error: false
+        run: |
+          echo "Hello World"
+
+      - name: Step 2 - List RDS Instances
+        continue-on-error: false
+        run: |
+          aws rds describe-db-instances \
+          --query "DBInstances[*].DBInstanceIdentifier" \
+          --output table
+
+      - name: Step 3 - List EC2 Instances
+        continue-on-error: true
+        run: |
+          aws ec2 describe-instances \
+          --query "Reservations[*].Instances[*].[InstanceId,State.Name,PublicIpAddress]" \
+          --output table
+
+      - name: Step 4 - List S3 Buckets
+        continue-on-error: true
+        run: |
+          aws s3 ls
